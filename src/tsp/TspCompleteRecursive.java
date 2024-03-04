@@ -7,30 +7,38 @@ import tsp.TspCompleteRecursive;
 
 public class TspCompleteRecursive {
 
-	public static int input[][];
+	public static int graph[][];
+	public static int N;
+	
 	public static void main(String[] args) {
 		System.setIn(TspCompleteRecursive.class.getResourceAsStream("input.txt"));
 		Scanner sc = new Scanner(System.in);
 		
 		int t = sc.nextInt();
 		for(int i=0; i < t; i++) {
-			int r = sc.nextInt();
-			input = new int[r][r];
-			for(int j=0; j < r; j++) {
-				for(int k=0; k < r; k++) {
-					input[j][k] = sc.nextInt();	
+			int ans = Integer.MAX_VALUE;
+			N = sc.nextInt();
+			graph = new int[N][N];
+			for(int j=0; j < N; j++) {
+				for(int k=0; k < N; k++) {
+					graph[j][k] = sc.nextInt();	
 				}
 			}
-			printInput(input, r);
-			for(int j=0; j < r; j++) {
-				solve(j, (1 << j));
+			printInput(graph, N);
+			for(int j=0; j < N; j++) {
+				int tmp = solve(j, 1 << j);
+				if(tmp < ans) {
+					ans = tmp;
+				}
 			}
+			
+			System.out.println("#" + N + " : " + ans);
 		}
 	}
 	
-	public static void printInput(int[][] input, int r) {
-		for(int i=0; i < r; i++) {
-			for(int j=0; j < r; j++) {
+	public static void printInput(int[][] input, int N) {
+		for(int i=0; i < N; i++) {
+			for(int j=0; j < N; j++) {
 				System.out.print(input[i][j]);
 				System.out.print(" ");
 			}
@@ -39,8 +47,20 @@ public class TspCompleteRecursive {
 	}
 	
 	public static int solve(int current, int visited) {
-		if(visited == (1 << current+1)-1) {
+		if(visited == (1 << N) - 1) {
 			return 0;
 		}
+		
+		int ret = Integer.MAX_VALUE;
+		for(int next=0; next < N; next++) {
+			if((visited & (1 << next)) != 1) {
+				int tmp = graph[current][next] + solve(next, visited | (1 << next));
+				if(tmp < ret) {
+					ret = tmp;
+				}	
+			}
+		}
+		
+		return ret;
 	}
 }
