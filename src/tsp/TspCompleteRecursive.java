@@ -16,7 +16,6 @@ public class TspCompleteRecursive {
 		
 		int t = sc.nextInt();
 		for(int i=0; i < t; i++) {
-			int ans = Integer.MAX_VALUE;
 			N = sc.nextInt();
 			graph = new int[N][N];
 			for(int j=0; j < N; j++) {
@@ -24,7 +23,10 @@ public class TspCompleteRecursive {
 					graph[j][k] = sc.nextInt();	
 				}
 			}
+			
 			printInput(graph, N);
+			
+			int ans = Integer.MAX_VALUE;
 			for(int j=0; j < N; j++) {
 				int tmp = solve(j, 1 << j);
 				if(tmp < ans) {
@@ -47,13 +49,13 @@ public class TspCompleteRecursive {
 	}
 	
 	public static int solve(int current, int visited) {
-		if(visited == (1 << N) - 1) {
+		if(visited == ((1 << N) - 1)) {
 			return 0;
 		}
 		
 		int ret = Integer.MAX_VALUE;
 		for(int next=0; next < N; next++) {
-			if((visited & (1 << next)) != 1) {
+			if((visited & (1 << next)) == 0 && graph[current][next] != 0) {
 				int tmp = graph[current][next] + solve(next, visited | (1 << next));
 				if(tmp < ret) {
 					ret = tmp;
