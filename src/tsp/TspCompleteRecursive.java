@@ -36,6 +36,8 @@ public class TspCompleteRecursive {
 			
 			System.out.println("#" + N + " : " + ans);
 		}
+		
+		sc.close();
 	}
 	
 	public static void printInput(int[][] input, int N) {

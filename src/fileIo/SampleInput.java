@@ -22,6 +22,7 @@ public class SampleInput {
 		}
 		
 		printInput(input, r, c);
+		sc.close();
 	}
 	
 	public static void printInput(char[][] input, int r, int c) {
