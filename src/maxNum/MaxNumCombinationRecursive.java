@@ -2,13 +2,13 @@ package maxNum;
 
 import java.util.Scanner;
 
-public class MaxNumPermutationRecursive {
+public class MaxNumCombinationRecursive {
 
 	public static int N;
 	public static int[] nums;
 	
 	public static void main(String[] args) {
-		System.setIn(MaxNumPermutationRecursive.class.getResourceAsStream("input.txt"));
+		System.setIn(MaxNumCombinationRecursive.class.getResourceAsStream("input.txt"));
 		Scanner sc = new Scanner(System.in);
 		
 		int t = sc.nextInt();
@@ -26,20 +26,25 @@ public class MaxNumPermutationRecursive {
 		sc.close();
 	}
 	
-	public static int solve(int cnt, int used, int val) {
+	public static int solve(int pos, int cnt, int val) {
 		if(cnt == 2) {
 			return val;
 		}
+		if(pos == N) {
+			return -1;
+		}
 		
 		int ret = 0;
-		for(int i=0; i < N; i++) {
-			if((used & (1 << i)) != 0) {
-				continue;
-			}
-			int tmp = solve(cnt+1, used | (1 << i), val * 10 + nums[i]);
-			if(tmp > ret) {
-				ret = tmp;
-			}
+		int tmp;
+		tmp = solve(pos + 1, cnt + 1, val + nums[pos]);
+		if(tmp >  ret) {
+			ret = tmp;
+		}
+
+		// TODO : not fully understood
+		tmp = solve(pos+1, cnt, val);
+		if(tmp >  ret) {
+			ret = tmp;
 		}
 		
 		return ret;
