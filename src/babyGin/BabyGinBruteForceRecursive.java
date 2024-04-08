@@ -43,6 +43,7 @@ public class BabyGinBruteForceRecursive {
 			return 0;
 		}
 		
+		// not fully understood
 		for(int i=0; i < 6; i++) {
 			if((used & (1 << i)) != 0) {
 				continue;
