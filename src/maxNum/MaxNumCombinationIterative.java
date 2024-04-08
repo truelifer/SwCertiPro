@@ -57,5 +57,4 @@ public class MaxNumCombinationIterative {
 		
 		return count;
 	}
-	
 }
